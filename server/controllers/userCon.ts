@@ -2,10 +2,11 @@ import UserStudent from '../model/UserStudent';
 
 export async function regiserStudent(req , res ){
     try {
+        console.log(req.body);
 
         const {user} = req.body
 
-        const {name ,lastName , password  , classroom } = user;
+        const {name ,lastName , password  , grade } = user;
         
         const userExist = await UserStudent.find({ name })
         if (userExist[0]) {
@@ -15,7 +16,7 @@ export async function regiserStudent(req , res ){
         else {
             const newUser = new UserStudent(user);
             await newUser.save();
-            const userInfo = { name , lastName , password , classroom}
+            const userInfo = { name , lastName , password , grade}
             // to save it in the Mongo 
             res.cookie(
                 'userInfo',
@@ -30,23 +31,8 @@ export async function regiserStudent(req , res ){
 }
 export async function signStudent(req , res ){
     try {
-        const {student} = req.body;
-        const {name , password } = student;
-
-        const username = await UserStudent.find({ name  });
-        const userPassword = await UserStudent.find({  password });
-
-        if(username[0] && userPassword[0]){
-            res.send({ok:true , message:`Welcome ${name}`})
-        }
-         else if(username[0] && userPassword[0] === undefined){
-            res.send({name:true , message:`the password is not correct`})
-        }
-        else{
-            res.send({ok:false , message:`${name} didn't exist you need to register `})
-        }
+        console.log('edededede;d[e;d[]e;d[];e]d');
         
-
     } catch (error) {
         console.error(error)
     }      
